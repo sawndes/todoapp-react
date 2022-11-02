@@ -24,13 +24,19 @@ function TodoForm({ addTodo, addTodos }) {
   const handleSubmit = e => {
     e.preventDefault();
     if (!value) return;
+    // addTodo(value + " -" + addTodos);
     addTodo(value);
-    addTodos(value)
+    // addTodos(value);
     setValue("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <select name="category" value = {value} className="select" id="category" onChange={e => setValue(" -"+ e.target.value)}>
+          <option value="">Select category</option>
+          <option value="Urgent">Urgent</option>
+          <option value="Important">Important</option>
+      </select>
       <input
         type="text"
         className="input"
@@ -38,10 +44,6 @@ function TodoForm({ addTodo, addTodos }) {
         value={value}
         onChange={e => setValue(e.target.value)}
       />
-      <select name="category" className="select" id="category" onChange={e => setValue(e.target.value)}>
-          <option value="Urgent" onChange={e => setValue(e.target.value)}>Urgent</option>
-          <option value="Important" onChange={e => setValue(e.target.value)}>Important</option>
-      </select>
     </form>
   );
 }
@@ -64,7 +66,8 @@ function App() {
   };
 
   const addTodos = category => {
-    const newTodos = [...todos, { addTodo ,category }];
+    const newTodos = [...todos,  { category }];
+    // return newTodos;
     setTodos(newTodos);
   };
 
