@@ -21,22 +21,32 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
 
 
 
-function TodoForm({ addTodo, addTodos }) {
+function TodoForm({ addTodo }) {
   const [input, setInput] = useState("");
+  const[select, setSelect] = useState(true);
+  // const [inputVa, setValuee] = useState("");
   const [value, setValue] = React.useState("");
   const handleSubmit = e => {
     e.preventDefault();
     if (!value) return;
-    // addTodo(value + " -" + addTodos);
-    addTodo(input + value);
-    // addTodos(value);
+    addTodo(input + value); 
     setValue("");
+    setInput("");
+    setSelect(true);
+    // setValuee("");
+
   };
+
+  function inputHandler(event) {
+    setInput(event.target.value);
+    setSelect(false);
+
+  }
 
   return (
     <form onSubmit={handleSubmit}>
       <select name="category" className="select" id="category" onChange={e => setValue(" -"+ e.target.value)}>
-          <option>Select category</option>
+          {select ? <option  disabled selected value="Select">Select category</option>:<option value="Select">Select category</option>}
           <option value="Urgent">Urgent</option>
           <option value="Important">Important</option>
       </select>
@@ -45,7 +55,7 @@ function TodoForm({ addTodo, addTodos }) {
         className="input"
         placeholder="Enter todo"
         value={input}
-        onChange={e => setInput(e.target.value)}
+        onChange={inputHandler}
       />
     </form>
   );
@@ -68,11 +78,6 @@ function App() {
     setTodos(newTodos);
   };
 
-  const addTodos = category => {
-    const newTodos = [...todos,  { category }];
-    // return newTodos;
-    setTodos(newTodos);
-  };
 
 
   const completeTodo = index => {
