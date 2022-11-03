@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 function Todo({ todo, index, completeTodo, removeTodo }) {
@@ -19,21 +19,24 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
   );
 }
 
+
+
 function TodoForm({ addTodo, addTodos }) {
+  const [input, setInput] = useState("");
   const [value, setValue] = React.useState("");
   const handleSubmit = e => {
     e.preventDefault();
     if (!value) return;
     // addTodo(value + " -" + addTodos);
-    addTodo(value);
+    addTodo(input + value);
     // addTodos(value);
     setValue("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <select name="category" value = {value} className="select" id="category" onChange={e => setValue(" -"+ e.target.value)}>
-          <option value="">Select category</option>
+      <select name="category" className="select" id="category" onChange={e => setValue(" -"+ e.target.value)}>
+          <option>Select category</option>
           <option value="Urgent">Urgent</option>
           <option value="Important">Important</option>
       </select>
@@ -41,8 +44,8 @@ function TodoForm({ addTodo, addTodos }) {
         type="text"
         className="input"
         placeholder="Enter todo"
-        value={value}
-        onChange={e => setValue(e.target.value)}
+        value={input}
+        onChange={e => setInput(e.target.value)}
       />
     </form>
   );
