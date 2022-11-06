@@ -24,12 +24,12 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
 function TodoForm({ addTodo }) {
   const [input, setInput] = useState("");
   const[select, setSelect] = useState(true);
-  // const [inputVa, setValuee] = useState("");
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = useState("");
   const handleSubmit = e => {
     e.preventDefault();
     if (!value) return;
     addTodo(input + value); 
+    // addCat(value);
     setValue("");
     setInput("");
     setSelect(true);
@@ -73,11 +73,10 @@ function App() {
     },
   ]);
 
-  const addTodo = text => {
-    const newTodos = [...todos, { text }];
+  const addTodo = (text, category) => {
+    const newTodos = [...todos, { text, category }];
     setTodos(newTodos);
   };
-
 
 
   const completeTodo = index => {
